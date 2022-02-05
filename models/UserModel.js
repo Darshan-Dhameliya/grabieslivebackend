@@ -7,7 +7,7 @@ mongoose.connect("mongodb://localhost/CollegeBackend", {
 
 const UserSchema = new mongoose.Schema({
   email: String,
-  password: String,
+  password: String
 });
 
 module.exports = mongoose.model("userinfo", UserSchema);
