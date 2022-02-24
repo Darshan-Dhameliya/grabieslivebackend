@@ -6,6 +6,7 @@ const controllerEmp = require("./controller/empControl");
 const auth = require("./middleware/Auth");
 const cors = require("cors");
 const db_connect = require("./connection/connection");
+const controllerAppointment = require("./controller/appointmentControl");
 
 db_connect();
 app.use(cors());
@@ -29,5 +30,15 @@ app.post("/emp/register", controllerEmp.register);
 app.post("/emp/login", controllerEmp.login);
 
 app.post("/changepass", controller.changePassword);
+
+app.post("/user/appointment", controllerAppointment.makeAppo);
+
+app.post("/emp/markdone", controllerAppointment.markAsCompleted);
+
+app.post("/user/completeAppo", controllerAppointment.completemakeAppoUser);
+
+app.post("/emp/completeAppo", controllerAppointment.completemakeAppoEmp);
+
+app.post("/emp/markdone", controllerAppointment.markAsCompleted);
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
