@@ -4,12 +4,13 @@ const user = require("../models/userModel");
 const OTP = require("../models/otpModel");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
+const config = require("../Config");
 
 let transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.email,
-    pass: process.env.password,
+    user: config.email,
+    pass: config.password,
   },
 });
 function controller() {
@@ -24,7 +25,7 @@ function controller() {
           const otpcode = Math.floor(1000 + Math.random() * 9000);
           const time = new Date().getTime() + 180 * 1000;
           var mailOptions = {
-            from: process.env.email,
+            from: config.email,
             to: email,
             subject: "OTP",
             text: `You Need An OTP For Login.OTP Expires In 3 Minutes.Your OTP Is ${otpcode}.`,

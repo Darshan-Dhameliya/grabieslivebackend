@@ -5,12 +5,13 @@ const OTP = require("../models/otpModel");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
+const config = require("../Config");
 
 let transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.email,
-    pass: process.env.password,
+    user: config.email,
+    pass: config.password,
   },
 });
 function controller() {
@@ -30,7 +31,7 @@ function controller() {
             userdata[0].password,
             function (err, result) {
               if (result) {
-                let Token = jwt.sign({ email: email }, process.env.SECRET_KEY, {
+                let Token = jwt.sign({ email: email }, config.SECRET_KEY, {
                   expiresIn: "10m",
                 });
                 return res.send({

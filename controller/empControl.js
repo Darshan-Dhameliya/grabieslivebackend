@@ -3,6 +3,7 @@ const _ = require("underscore");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const config = require("../Config");
 
 function empController() {
   this.register = async (req, res) => {
@@ -45,7 +46,7 @@ function empController() {
           if (!userdata) return res.json("please sign up");
           bcrypt.compare(password, userdata.password, function (err, result) {
             if (result) {
-              let Token = jwt.sign({ email: email }, process.env.SECRET_KEY, {
+              let Token = jwt.sign({ email: email }, config.SECRET_KEY, {
                 expiresIn: "10m",
               });
               return res.send({ status: true, Data: userdata, token: Token });
