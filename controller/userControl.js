@@ -79,76 +79,19 @@ function controller() {
     }
   };
 
-  this.sendMail = async (req, res, next) => {
-    const { email } = req.body;
-    await OTP.findOne({ email: email }, async (err, otpdata) => {
-      if (otpdata) {
-        req.OTPvalue = otpdata;
-        next();
-      } else {
-        const otpcode = Math.floor(1000 + Math.random() * 9000);
-        const time = new Date().getTime() + 180 * 1000;
-        var mailOptions = {
-          from: process.env.email,
-          to: email,
-          subject: "OTP",
-          text: `You Need An OTP For Login.OTP Expires In 3 Minutes.Your OTP Is ${otpcode}.`,
-        };
-        transporter.sendMail(mailOptions, async (err, info) => {
-          let otpdata = {
-            email: email,
-            code: otpcode,
-            expiresIn: time,
-          };
-
-          await OTP.create(otpdata, (err, resu) => {
-            res.send({
-              status: true,
-              message: "E-mail Sent Successfully",
-            });
-          });
-        });
-      }
-    }).clone();
-  };
-
   this.forgetPassword = async (req, res) => {
-    const { email, c_otp, new_pass } = req.body;
-    const data = req.OTPvalue;
-    console.log(data.code, c_otp);
-    if (data.code === parseInt(c_otp)) {
-      let currTime = new Date().getTime();
-      if (currTime < data.expiresIn) {
-        await bcrypt.hash(new_pass, 10, async (err, hash) => {
-          if (!err) {
-            await user.updateOne({ email: email }, { password: hash });
-
-            res.send({
-              status: true,
-              message: "Password Changed Successfully",
-            });
-            //delete otp after verification
-            await OTP.deleteOne({ id: data.id }, function (err, docs) {
-              if (err) {
-                console.log(errr);
-              }
-            }).clone();
-          } else {
-            throw err;
-          }
+    const { email, new_pass } = req.body;
+    await bcrypt.hash(new_pass, 10, async (err, hash) => {
+      if (!err) {
+        await user.updateOne({ email: email }, { password: hash });
+        res.send({
+          status: true,
+          message: "Password Changed Successfully",
         });
       } else {
-        //delete otp after otp expire
-        await OTP.deleteOne({ id: data.id }, function (err, docs) {
-          if (err) {
-            console.log(err);
-          }
-        }).clone();
-        res.send({ status: false, message: "OTP Expired.." });
+        throw err;
       }
-    } else {
-      res.send({ status: false, message: "Invalid Otp.." });
-    }
+    });
   };
 
   this.isRegistered = async (req, res, next) => {

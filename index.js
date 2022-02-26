@@ -4,6 +4,8 @@ const PORT = 8000;
 const controller = require("./controller/userControl");
 const controllerEmp = require("./controller/empControl");
 const auth = require("./middleware/Auth");
+const emailAuth = require("./middleware/EmailAuth");
+
 const cors = require("cors");
 const db_connect = require("./connection/connection");
 const controllerAppointment = require("./controller/appointmentControl");
@@ -20,8 +22,9 @@ app.post("/login", controller.login);
 
 app.post(
   "/forgetpass",
-  controller.isRegistered,
-  controller.sendMail,
+  emailAuth.isRegistered,
+  emailAuth.sendMail,
+  emailAuth.VerifyOtp,
   controller.forgetPassword
 );
 
@@ -31,13 +34,25 @@ app.post("/emp/login", controllerEmp.login);
 
 app.post("/changepass", controller.changePassword);
 
-app.post("/user/appointment", controllerAppointment.makeAppo);
+app.post(
+  "/user/appointment",
+  controllerAppointment.checkAppoExist,
+  controllerAppointment.checkEmpFree,
+  controllerAppointment.makeAppo
+);
 
 app.post("/emp/markdone", controllerAppointment.markAsCompleted);
 
 app.post("/user/completeAppo", controllerAppointment.completemakeAppoUser);
 
-app.post("/emp/completeAppo", controllerAppointment.completemakeAppoEmp);
+app.post(
+  "/user/chekempavilability",
+  controllerAppointment.checkAppoExist,
+  controllerAppointment.checkEmpFree,
+  controllerAppointment.DummyMIddlware
+);
+
+app.post("/user/completeAppo", controllerAppointment.completemakeAppoEmp);
 
 app.post("/emp/markdone", controllerAppointment.markAsCompleted);
 
