@@ -59,7 +59,7 @@ function appointment() {
     if (appoints.length) {
       res.send({
         status: false,
-        message: "Appoiment Already Book For this",
+        message: "Appoiment Already Booked For this",
       });
     } else {
       next();

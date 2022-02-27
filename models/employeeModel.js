@@ -5,12 +5,13 @@ let employeSchema = new mongoose.Schema({
   email: String,
   phone: String,
   service_Area: String,
-  service_Spec: String,
+  service_Spec: String,//Electricion
+  // sub_spec : String, "TV/fridge/Washing machine"
   password: String,
   isVerified: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 });
 
 module.exports = new mongoose.model("Employee", employeSchema);

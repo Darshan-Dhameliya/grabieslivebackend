@@ -3,6 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 const controller = require("./controller/userControl");
 const controllerEmp = require("./controller/empControl");
+const controllerAdmin = require("./controller/adminControl");
 const auth = require("./middleware/Auth");
 const emailAuth = require("./middleware/EmailAuth");
 
@@ -65,5 +66,11 @@ app.post("/user/bookedAppo", controllerAppointment.BookedServiceUser);
 app.post("/emp/completeAppo", controllerAppointment.completedAppoEmp);
 
 app.post("/user/bookedAppo", controllerAppointment.BookedServiceEmp);
+
+app.get("/admin/totalEmp",controllerAdmin.totalEmp);
+
+app.get("/admin/totalAppo",controllerAdmin.totalAppo);
+
+app.get("/admin/totalUser",controllerAdmin.totalUser);
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
