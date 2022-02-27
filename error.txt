@@ -1,1 +1,4 @@
 sudo service mongod start
+
+
+mongodb+srv://GrabiesLive:GrabiesLive@grabieslive.unhfo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority

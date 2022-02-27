@@ -7,13 +7,6 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 const config = require("../Config");
 
-let transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: config.email,
-    pass: config.password,
-  },
-});
 function controller() {
   this.login = async (req, res) => {
     const { email, password } = req.body;

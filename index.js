@@ -28,6 +28,14 @@ app.post(
   controller.forgetPassword
 );
 
+app.post(
+  "/emp/forgetpass",
+  controllerEmp.isRegistered,
+  emailAuth.sendMail,
+  emailAuth.VerifyOtp,
+  controllerEmp.forgetPassword
+);
+
 app.post("/emp/register", controllerEmp.register);
 
 app.post("/emp/login", controllerEmp.login);
@@ -41,10 +49,6 @@ app.post(
   controllerAppointment.makeAppo
 );
 
-app.post("/emp/markdone", controllerAppointment.markAsCompleted);
-
-app.post("/user/completeAppo", controllerAppointment.completemakeAppoUser);
-
 app.post(
   "/user/chekempavilability",
   controllerAppointment.checkAppoExist,
@@ -52,8 +56,14 @@ app.post(
   controllerAppointment.DummyMIddlware
 );
 
-app.post("/user/completeAppo", controllerAppointment.completemakeAppoEmp);
-
 app.post("/emp/markdone", controllerAppointment.markAsCompleted);
+
+app.post("/user/completeAppo", controllerAppointment.completdAppoUser);
+
+app.post("/user/bookedAppo", controllerAppointment.BookedServiceUser);
+
+app.post("/emp/completeAppo", controllerAppointment.completedAppoEmp);
+
+app.post("/user/bookedAppo", controllerAppointment.BookedServiceEmp);
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));

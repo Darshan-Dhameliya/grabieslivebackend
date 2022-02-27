@@ -72,6 +72,7 @@ function appointment() {
     const Empdata = await Emp.find({
       service_Spec: bdata.service,
       service_Area: bdata.area,
+      isVerified: true,
     })
       .select("id")
       .clone();
@@ -94,7 +95,9 @@ function appointment() {
     });
 
     if (AvilableEmparr.length) {
-      req.EmpID = AvilableEmparr[0];
+      req.EmpID =
+        AvilableEmparr[Math.floor(Math.random() * AvilableEmparr.length)];
+
       next();
     } else {
       res.send({
@@ -108,7 +111,25 @@ function appointment() {
     res.send({ status: true });
   };
 
-  this.completemakeAppoUser = async (req, res) => {
+  this.BookedServiceEmp = async (req, res) => {
+    const { id } = req.body;
+
+    const data = await Appoint.find({
+      emp_appoint: id,
+    });
+
+    res.send({ status: true, data });
+  };
+  this.BookedServiceUser = async (req, res) => {
+    const { id } = req.body;
+
+    const data = await Appoint.find({
+      emp_appoint: id,
+    });
+
+    res.send({ status: true, data });
+  };
+  this.completdAppoUser = async (req, res) => {
     const { id } = req.body;
 
     const data = await Appoint.find({
@@ -118,7 +139,7 @@ function appointment() {
     res.send({ status: true, data });
   };
 
-  this.completemakeAppoEmp = async (req, res) => {
+  this.completedAppoEmp = async (req, res) => {
     const { id } = req.body;
 
     const data = await Appoint.find({

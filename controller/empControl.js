@@ -43,18 +43,70 @@ function empController() {
     if (email && password) {
       await Emp.findOne({ email: email }, (err, userdata) => {
         if (!err) {
-          if (!userdata) return res.json("please sign up");
-          bcrypt.compare(password, userdata.password, function (err, result) {
-            if (result) {
-              let Token = jwt.sign({ email: email }, config.SECRET_KEY, {
-                expiresIn: "10m",
+          if (userdata) {
+            if (userdata.isVerified) {
+              bcrypt.compare(
+                password,
+                userdata.password,
+                function (err, result) {
+                  if (result) {
+                    let Token = jwt.sign({ email: email }, config.SECRET_KEY, {
+                      expiresIn: "10m",
+                    });
+                    return res.send({
+                      status: true,
+                      Data: userdata,
+                      token: Token,
+                    });
+                  } else
+                    return res.json({
+                      status: false,
+                      message: "please enter correct password",
+                    });
+                }
+              );
+            } else {
+              return res.json({
+                status: false,
+                message:
+                  "Your Account is Not Verified,For More Details Please Contact Administor",
               });
-              return res.send({ status: true, Data: userdata, token: Token });
-            } else return res.json("please enter correct password");
-          });
+            }
+          } else {
+            return res.json({
+              status: false,
+              message: "please sign up",
+            });
+          }
         } else throw err;
       }).clone();
     }
+  };
+
+  this.forgetPassword = async (req, res) => {
+    const { email, new_pass } = req.body;
+    await bcrypt.hash(new_pass, 10, async (err, hash) => {
+      if (!err) {
+        await Emp.updateOne({ email: email }, { password: hash });
+        res.send({
+          status: true,
+          message: "Password Changed Successfully",
+        });
+      } else {
+        throw err;
+      }
+    });
+  };
+
+  this.isRegistered = async (req, res, next) => {
+    const { email } = req.body;
+    await Emp.findOne({ email: email }, async (err, data) => {
+      if (data) {
+        next();
+      } else {
+        res.send({ status: false, message: "Your account Not found" });
+      }
+    }).clone();
   };
 }
 
