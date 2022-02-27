@@ -26,6 +26,7 @@ function empController() {
               service_Area: area,
               service_Spec: spec,
               password: hash,
+              isVerified: false,
             };
             Emp.create(empObj, (err, data) => {
               if (!err) {

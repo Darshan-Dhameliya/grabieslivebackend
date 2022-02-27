@@ -18,6 +18,7 @@ function appointment() {
       area: bdata.area,
       date: bdata.date,
       time: bdata.time,
+      isCompleted: false,
     };
     await Appoint.create(ApppoiMentObJ, (err, resu) => {
       if (resu) {

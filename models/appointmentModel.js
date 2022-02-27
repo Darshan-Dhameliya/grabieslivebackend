@@ -12,10 +12,7 @@ let appointmentSchema = new mongoose.Schema({
   emp_appoint: String,
   date: String,
   time: String,
-  isCompleted: {
-    type: Boolean,
-    default: false,
-  },
+  isCompleted: Boolean,
 });
 
 module.exports = mongoose.model("Appointment", appointmentSchema);

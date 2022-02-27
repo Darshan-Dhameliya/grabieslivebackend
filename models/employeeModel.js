@@ -7,10 +7,7 @@ let employeSchema = new mongoose.Schema({
   service_Area: String,
   service_Spec: String,
   password: String,
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
+  isVerified: Boolean,
 });
 
 module.exports = new mongoose.model("Employee", employeSchema);
