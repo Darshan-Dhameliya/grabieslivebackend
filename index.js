@@ -5,7 +5,7 @@ const controller = require("./controller/userControl");
 const controllerEmp = require("./controller/empControl");
 const auth = require("./middleware/Auth");
 const emailAuth = require("./middleware/EmailAuth");
-
+const adminControl = require("./controller/adminControl");
 const cors = require("cors");
 const db_connect = require("./connection/connection");
 const controllerAppointment = require("./controller/appointmentControl");
@@ -65,5 +65,7 @@ app.post("/user/bookedAppo", controllerAppointment.BookedServiceUser);
 app.post("/emp/completeAppo", controllerAppointment.completedAppoEmp);
 
 app.post("/user/bookedAppo", controllerAppointment.BookedServiceEmp);
+
+app.post("/admin/emplist", adminControl.EmpList);
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
