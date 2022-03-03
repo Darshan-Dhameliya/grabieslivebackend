@@ -60,7 +60,7 @@ function appointment() {
     if (appoints.length) {
       res.send({
         status: false,
-        message: "Appoiment Already Book For this",
+        message: "Appoiment Already Booked For this",
       });
     } else {
       next();
@@ -77,6 +77,7 @@ function appointment() {
     })
       .select("id")
       .clone();
+
     const Empdataarr = [];
     Empdata.map((item) => Empdataarr.push(item.id));
 
@@ -139,7 +140,6 @@ function appointment() {
 
     res.send({ status: true, data });
   };
-
   this.completedAppoEmp = async (req, res) => {
     const { id } = req.body;
 

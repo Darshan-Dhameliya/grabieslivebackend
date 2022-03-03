@@ -2,3 +2,7 @@ sudo service mongod start
 
 
 mongodb+srv://GrabiesLive:GrabiesLive@grabieslive.unhfo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
+git add .
+ git commit -am "make it better"
+ git push heroku master

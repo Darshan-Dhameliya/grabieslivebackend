@@ -9,6 +9,7 @@ let appointmentSchema = new mongoose.Schema({
   service: String,
   charge: String,
   area: String,
+  sub_spec: Array,
   emp_appoint: String,
   date: String,
   time: String,
