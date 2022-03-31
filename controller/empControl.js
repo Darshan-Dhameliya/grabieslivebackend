@@ -84,11 +84,11 @@ function empController() {
     }
   };
 
-  this.forgetPassword = async (req, res) => {
-    const { email, new_pass } = req.body;
+  this.changePassword = async (req, res) => {
+    const { id, new_pass } = req.body;
     await bcrypt.hash(new_pass, 10, async (err, hash) => {
       if (!err) {
-        await Emp.updateOne({ email: email }, { password: hash });
+        await Emp.updateOne({ _id: id }, { password: hash });
         res.send({
           status: true,
           message: "Password Changed Successfully",
@@ -108,6 +108,20 @@ function empController() {
         res.send({ status: false, message: "Your account Not found" });
       }
     }).clone();
+  };
+
+  this.ValidatePassword = async (req, res, next) => {
+    let { id, old_pass } = req.body;
+    const data = await Emp.findById(id);
+    const matchData = await bcrypt.compare(old_pass, data.password);
+    if (matchData) {
+      next();
+    } else {
+      res.send({
+        status: false,
+        message: "old Password Not match",
+      });
+    }
   };
 }
 

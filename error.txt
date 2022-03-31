@@ -1,8 +1,10 @@
+--> for Mongo Service :
 sudo service mongod start
 
-
+--> for Mongo Compass :
 mongodb+srv://GrabiesLive:GrabiesLive@grabieslive.unhfo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
+--> for hosting push :
 git add .
- git commit -am "make it better"
- git push heroku master
+git commit -am "make it better"
+git push heroku master

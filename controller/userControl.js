@@ -73,7 +73,7 @@ function controller() {
     }
   };
 
-  this.forgetPassword = async (req, res) => {
+  this.changePassword = async (req, res) => {
     const { email, new_pass } = req.body;
     await bcrypt.hash(new_pass, 10, async (err, hash) => {
       if (!err) {
@@ -101,41 +101,16 @@ function controller() {
       .clone();
   };
 
-  this.changePassword = async (req, res) => {
-    let { email, Otp, new_pass } = req.body;
-    if (!email) {
-      res.send({ status: false, message: "plz,enter email" });
-    } else if (!Otp) {
-      res.send({ status: false, message: "plz,enter OTP" });
-    } else if (!new_pass) {
-      res.send({ status: false, message: "plz,enter New Password" });
+  this.ValidatePassword = async (req, res, next) => {
+    let { id, old_pass } = req.body;
+    const data = await user.findById(id);
+    const matchData = await bcrypt.compare(old_pass, data.password);
+    if (matchData) {
+      next();
     } else {
-      await OTP.findOne({ email: email, code: Otp }, (err, data) => {
-        if (!err) {
-          if (data) {
-            let currTime = new Date().getTime();
-            console.log(data.expiresIn - currTime);
-            if (currTime < data.expiresIn) {
-              bcrypt.hash(new_pass, 10, (err, hash) => {
-                if (!err) {
-                  user.updateOne({ email: email }, { password: hash });
-                  res.send({
-                    status: true,
-                    message: "Password Changed Successfully",
-                  });
-                } else {
-                  throw err;
-                }
-              });
-            } else {
-              res.send({ status: false, message: "OTP Expired.." });
-            }
-          } else {
-            res.send({ status: false, message: "Invalid Otp.." });
-          }
-        } else {
-          throw err;
-        }
+      res.send({
+        status: false,
+        message: "old Password Not match",
       });
     }
   };

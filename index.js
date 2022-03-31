@@ -19,14 +19,14 @@ app.get("/", (req, res) => res.send({ message: "server workfine" }));
 
 app.post("/signup", controller.signup);
 
-app.post("/login", controller.login);
+app.post("/login", adminControl.loginAdmin, controller.login);
 
 app.post(
   "/forgetpass",
   emailAuth.isRegistered,
   emailAuth.sendMail,
   emailAuth.VerifyOtp,
-  controller.forgetPassword
+  controller.changePassword
 );
 
 app.post(
@@ -34,14 +34,30 @@ app.post(
   controllerEmp.isRegistered,
   emailAuth.sendMail,
   emailAuth.VerifyOtp,
-  controllerEmp.forgetPassword
+  controllerEmp.changePassword
 );
 
 app.post("/emp/register", controllerEmp.register);
 
 app.post("/emp/login", controllerEmp.login);
 
-app.post("/changepass", controller.changePassword);
+app.post(
+  "/user/changepass",
+  controller.ValidatePassword,
+  controller.changePassword
+);
+
+app.post(
+  "/admin/changepass",
+  controllerAdmin.ValidatePassword,
+  controllerAdmin.changePassword
+);
+
+app.post(
+  "/emp/changepass",
+  controllerEmp.ValidatePassword,
+  controllerEmp.changePassword
+);
 
 app.post(
   "/user/appointment",
@@ -65,11 +81,18 @@ app.post("/user/bookedAppo", controllerAppointment.BookedServiceUser);
 
 app.post("/emp/completeAppo", controllerAppointment.completedAppoEmp);
 
-app.post("/user/bookedAppo", controllerAppointment.BookedServiceEmp);
+app.post("/emp/bookedAppo", controllerAppointment.BookedServiceEmp);
 
 app.post("/admin/emplist", adminControl.EmpList);
 app.post("/admin/Verifiedemplist", adminControl.Verifiedemplist);
 app.post("/admin/unVerifiedemplist", adminControl.unVerifiedemplist);
+
+app.post("/admin/bookAppo", adminControl.bookAppo);
+app.post("/admin/completAppo", adminControl.completAppo);
+app.post("/admin/unCompleteAppo", adminControl.unCompleteAppo);
+// app.post("/admin/userlist", adminControl.unVerifiedemplist);
+
+app.post("/admin/register", adminControl.addAdmin);
 
 app.get("/admin/totalcount", controllerAdmin.totalCount);
 

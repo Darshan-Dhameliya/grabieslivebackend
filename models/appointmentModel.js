@@ -9,10 +9,14 @@ let appointmentSchema = new mongoose.Schema({
   service: String,
   charge: String,
   area: String,
-  sub_spec: Array,
-  emp_appoint: String,
+  sub_spec: String,
+  emp_appoint: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Employee",
+  },
   date: String,
   time: String,
+  dateAndTime: String,
   isCompleted: Boolean,
 });
 

@@ -18,6 +18,8 @@ function appointment() {
       area: bdata.area,
       date: bdata.date,
       time: bdata.time,
+      dateAndTime: bdata.dateAndTime,
+      sub_spec: bdata.sub_spec,
       isCompleted: false,
     };
     await Appoint.create(ApppoiMentObJ, (err, resu) => {
@@ -122,30 +124,32 @@ function appointment() {
 
     res.send({ status: true, data });
   };
+
   this.BookedServiceUser = async (req, res) => {
     const { id } = req.body;
 
     const data = await Appoint.find({
-      emp_appoint: id,
+      userid: id,
+      isCompleted: false,
     });
 
     res.send({ status: true, data });
   };
+
   this.completdAppoUser = async (req, res) => {
     const { id } = req.body;
 
     const data = await Appoint.find({
-      $and: [{ emp_appoint: id }, { isCompleted: true }],
+      userid: id,
+      isCompleted: true,
     });
 
     res.send({ status: true, data });
   };
+
   this.completedAppoEmp = async (req, res) => {
     const { id } = req.body;
-
-    const data = await Appoint.find({
-      $and: [{ userid: id }, { isCompleted: true }],
-    });
+    const data = await Appoint.find({ emp_appoint: id, isCompleted: true });
 
     res.send({ status: true, data });
   };
