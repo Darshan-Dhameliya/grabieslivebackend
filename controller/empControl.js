@@ -99,17 +99,6 @@ function empController() {
     });
   };
 
-  this.isRegistered = async (req, res, next) => {
-    const { email } = req.body;
-    await Emp.findOne({ email: email }, async (err, data) => {
-      if (data) {
-        next();
-      } else {
-        res.send({ status: false, message: "Your account Not found" });
-      }
-    }).clone();
-  };
-
   this.ValidatePassword = async (req, res, next) => {
     let { id, old_pass } = req.body;
     const data = await Emp.findById(id);
@@ -122,6 +111,17 @@ function empController() {
         message: "old Password Not match",
       });
     }
+  };
+
+  this.isRegistered = async (req, res, next) => {
+    const { email } = req.body;
+    await Emp.findOne({ email: email }, async (err, data) => {
+      if (data) {
+        next();
+      } else {
+        res.send({ status: false, message: "Your account Not found" });
+      }
+    }).clone();
   };
 }
 

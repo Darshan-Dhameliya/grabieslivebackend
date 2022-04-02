@@ -5,6 +5,7 @@ function appointment() {
   this.makeAppo = async (req, res) => {
     let bdata = req.body;
     bdata.EmpID = req.EmpID;
+    const otpcode = Math.floor(100000 + Math.random() * 900000);
 
     const ApppoiMentObJ = {
       emp_appoint: bdata.EmpID,
@@ -21,6 +22,7 @@ function appointment() {
       dateAndTime: bdata.dateAndTime,
       sub_spec: bdata.sub_spec,
       isCompleted: false,
+      otp: otpcode,
     };
     await Appoint.create(ApppoiMentObJ, (err, resu) => {
       if (resu) {
@@ -34,16 +36,27 @@ function appointment() {
   };
 
   this.markAsCompleted = async (req, res) => {
-    const { id } = req.body;
+    const { id, c_otp } = req.body;
+    console.log(id);
     try {
-      const data = await Appoint.findByIdAndUpdate(
-        id,
-        { isCompleted: true },
-        { new: true }
-      );
-      res.send({ status: true, data });
+      const data = await Appoint.findById(id);
+      if (c_otp === data.otp) {
+        const data = await Appoint.findByIdAndUpdate(
+          id,
+          { isCompleted: true },
+          { new: true }
+        );
+        if (data.isCompleted) {
+          res.send({ status: true, message: "otp verify successfully" });
+        } else {
+          res.send({ status: false, message: "Something went wrong" });
+        }
+      } else {
+        res.send({ status: false, message: "Please enter valid otp" });
+      }
     } catch (e) {
-      res.send({ status: false, e });
+      console.log(e);
+      res.send({ status: false, message: "Something went wrong" });
     }
   };
 
@@ -120,6 +133,7 @@ function appointment() {
 
     const data = await Appoint.find({
       emp_appoint: id,
+      isCompleted: false,
     });
 
     res.send({ status: true, data });

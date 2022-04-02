@@ -32,10 +32,12 @@ function adminControl() {
     const data = await Emp.find({});
     res.send({ data });
   };
+
   this.Verifiedemplist = async (req, res) => {
     const data = await Emp.find({ isVerified: true });
     res.send({ data });
   };
+
   this.unVerifiedemplist = async (req, res) => {
     const data = await Emp.find({ isVerified: false });
     res.send({ data });

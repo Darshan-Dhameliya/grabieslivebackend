@@ -18,6 +18,7 @@ let appointmentSchema = new mongoose.Schema({
   time: String,
   dateAndTime: String,
   isCompleted: Boolean,
+  otp: String,
 });
 
 module.exports = mongoose.model("Appointment", appointmentSchema);
