@@ -37,7 +37,7 @@ function appointment() {
 
   this.markAsCompleted = async (req, res) => {
     const { id, c_otp } = req.body;
-    console.log(id);
+
     try {
       const data = await Appoint.findById(id);
       if (c_otp === data.otp) {

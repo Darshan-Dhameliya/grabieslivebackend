@@ -5,6 +5,14 @@ sudo service mongod start
 mongodb+srv://GrabiesLive:GrabiesLive@grabieslive.unhfo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
 --> for hosting push :
+
+change url :
+1)http://localhost:8000
+-->https://grabieslive.herokuapp.com
+
+2)http://localhost:3000
+-->https://grabieslive.web.app
+
 git add .
 git commit -am "make it better"
 git push heroku master

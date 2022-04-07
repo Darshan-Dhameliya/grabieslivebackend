@@ -58,6 +58,11 @@ function adminControl() {
     res.send({ data });
   };
 
+  this.userList = async (req, res) => {
+    const data = await User.find({});
+    res.send({ data });
+  };
+
   this.loginAdmin = async (req, res, next) => {
     const { email, password } = req.body;
     if (email && password) {
@@ -135,7 +140,6 @@ function adminControl() {
     const data = await Admin.findById(id);
     const matchData = await bcrypt.compare(old_pass, data.password);
     if (matchData) {
-      console.log(data, old_pass, matchData);
       next();
     } else {
       res.send({

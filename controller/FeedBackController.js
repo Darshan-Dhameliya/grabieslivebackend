@@ -1,10 +1,6 @@
 const feedBack = require("../models/feedBackModule");
 const _ = require("underscore");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const config = require("../Config");
-
 function FeedBackControl() {
   this.addFeedBack = async (req, res) => {
     const { rating, desc, date, appoId, empId, userId } = req.body;

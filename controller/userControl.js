@@ -1,9 +1,7 @@
 const _ = require("underscore");
 const bcrypt = require("bcrypt");
 const user = require("../models/userModel");
-const OTP = require("../models/otpModel");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
 require("dotenv").config();
 const config = require("../Config");
 

@@ -12,6 +12,9 @@ const db_connect = require("./connection/connection");
 const controllerAppointment = require("./controller/appointmentControl");
 const fedbackcontrol = require("./controller/FeedBackController");
 const complaintcontrol = require("./controller/ComplaintControl");
+const parseUrl = express.urlencoded({ extended: false });
+const parseJson = express.json({ extended: false });
+const PaymentController = require("./Paytm/index");
 
 db_connect();
 app.use(cors());
@@ -67,6 +70,7 @@ app.post("/user/bookedAppo", controllerAppointment.BookedServiceUser);
 app.post("/emp/markdone", controllerAppointment.markAsCompleted);
 app.post("/emp/completeAppo", controllerAppointment.completedAppoEmp);
 app.post("/emp/bookedAppo", controllerAppointment.BookedServiceEmp);
+app.post("/emp/markverified", controllerEmp.MarkIsVerfied);
 
 //admin
 app.get("/admin/totalcount", controllerAdmin.totalCount);
@@ -76,6 +80,7 @@ app.post("/admin/unVerifiedemplist", adminControl.unVerifiedemplist);
 app.post("/admin/bookAppo", adminControl.bookAppo);
 app.post("/admin/completAppo", adminControl.completAppo);
 app.post("/admin/unCompleteAppo", adminControl.unCompleteAppo);
+app.post("/admin/userlist", adminControl.userList);
 app.post("/admin/register", adminControl.addAdmin);
 app.post(
   "/admin/changepass",
@@ -87,5 +92,9 @@ app.post(
 //complaint
 app.post("/complaint/make", complaintcontrol.addComlaint);
 app.post("/feedback/make", fedbackcontrol.addFeedBack);
+
+//paytm
+app.post("/paynow", [parseUrl, parseJson], PaymentController.paymentPayNow);
+app.post("/callback", PaymentController.paymentCallback);
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));

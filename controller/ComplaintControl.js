@@ -8,7 +8,6 @@ const config = require("../Config");
 function ComplaintModule() {
   this.addComlaint = async (req, res) => {
     const { desc, date, appoId, empId, userId } = req.body;
-    console.log(req.body);
     if (desc && date) {
       let compLaintkObj = {
         complaintDesc: desc,

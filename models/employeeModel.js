@@ -8,6 +8,7 @@ let employeSchema = new mongoose.Schema({
   service_Spec: String,
   password: String,
   isVerified: Boolean,
+  memrship_plan: String,
 });
 
 module.exports = new mongoose.model("Employee", employeSchema);

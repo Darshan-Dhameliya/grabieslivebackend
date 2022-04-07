@@ -68,9 +68,9 @@ function empController() {
               );
             } else {
               return res.json({
-                status: false,
-                message:
-                  "Your Account is Not Verified,For More Details Please Contact Administor",
+                status: true,
+                message: "Your Account is Not Verified,Please buy a plan",
+                Data: userdata,
               });
             }
           } else {
@@ -122,6 +122,25 @@ function empController() {
         res.send({ status: false, message: "Your account Not found" });
       }
     }).clone();
+  };
+
+  this.MarkIsVerfied = async (req, res, next) => {
+    const { id, memrship_plan } = req.body;
+
+    const data = await Emp.findByIdAndUpdate(
+      id,
+      { isVerified: true, memrship_plan: memrship_plan },
+      { new: true }
+    );
+    if (data.isVerified) {
+      res.send({
+        status: true,
+        Data: data,
+        message: "Your account verfiy sucessfull,now you got services",
+      });
+    } else {
+      res.send({ status: false, message: "Something went wrong" });
+    }
   };
 }
 
