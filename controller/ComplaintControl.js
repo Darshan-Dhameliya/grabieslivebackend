@@ -1,9 +1,5 @@
 const compLaint = require("../models/complaintModele");
-const _ = require("underscore");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const config = require("../Config");
 
 function ComplaintModule() {
   this.addComlaint = async (req, res) => {
@@ -15,6 +11,7 @@ function ComplaintModule() {
         empId,
         appoId,
         userId,
+        markAsRead: false,
       };
       compLaint.create(compLaintkObj, (err, data) => {
         if (data) {
@@ -30,6 +27,46 @@ function ComplaintModule() {
           });
         }
       });
+    } else {
+      res.send({
+        status: false,
+        message: "provide data",
+      });
+    }
+  };
+
+  this.ViewEmpComplaint = async (req, res) => {
+    const { empId } = req.body;
+    if (empId) {
+      const data = await compLaint
+        .find({ empId, markAsRead: false })
+        .populate("appoId");
+
+      res.send({
+        status: true,
+        data,
+      });
+    } else {
+      res.send({
+        status: false,
+        message: "provide data",
+      });
+    }
+  };
+
+  this.MarkReadEmp = async (req, res) => {
+    const { id } = req.body;
+    if (id) {
+      const data = await compLaint.findByIdAndUpdate(
+        id,
+        { markAsRead: true },
+        { new: true }
+      );
+      if (data) {
+        res.send({
+          status: true,
+        });
+      }
     } else {
       res.send({
         status: false,

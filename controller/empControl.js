@@ -1,5 +1,4 @@
 const Emp = require("../models/employeeModel");
-const _ = require("underscore");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -124,12 +123,12 @@ function empController() {
     }).clone();
   };
 
-  this.MarkIsVerfied = async (req, res, next) => {
-    const { id, memrship_plan } = req.body;
+  this.MarkIsVerfied = async (req, res) => {
+    const { id } = req.body;
 
     const data = await Emp.findByIdAndUpdate(
       id,
-      { isVerified: true, memrship_plan: memrship_plan },
+      { isVerified: true },
       { new: true }
     );
     if (data.isVerified) {

@@ -49,7 +49,9 @@ app.post(
   controller.ValidatePassword,
   controller.changePassword
 );
+app.post("/user/bookedAppo", controllerAppointment.BookedServiceUser);
 app.post("/user/completeAppo", controllerAppointment.completdAppoUser);
+app.post("/user/cancelAppo", controllerAppointment.DeleteCancelAppo);
 
 //emp
 app.post(
@@ -66,7 +68,6 @@ app.post(
   controllerEmp.ValidatePassword,
   controllerEmp.changePassword
 );
-app.post("/user/bookedAppo", controllerAppointment.BookedServiceUser);
 app.post("/emp/markdone", controllerAppointment.markAsCompleted);
 app.post("/emp/completeAppo", controllerAppointment.completedAppoEmp);
 app.post("/emp/bookedAppo", controllerAppointment.BookedServiceEmp);
@@ -82,16 +83,22 @@ app.post("/admin/completAppo", adminControl.completAppo);
 app.post("/admin/unCompleteAppo", adminControl.unCompleteAppo);
 app.post("/admin/userlist", adminControl.userList);
 app.post("/admin/register", adminControl.addAdmin);
+app.post("/admin/feedback", adminControl.viewFeedBack);
+app.post("/admin/complaint", adminControl.ViewComplaint);
 app.post(
   "/admin/changepass",
   controllerAdmin.ValidatePassword,
   controllerAdmin.changePassword
 );
+
 // app.post("/admin/userlist", adminControl.unVerifiedemplist);
 
 //complaint
 app.post("/complaint/make", complaintcontrol.addComlaint);
 app.post("/feedback/make", fedbackcontrol.addFeedBack);
+app.get("/feedback/view", fedbackcontrol.viewFeedBack);
+app.post("/complaint/view", complaintcontrol.ViewEmpComplaint);
+app.post("/complaint/markread", complaintcontrol.MarkReadEmp);
 
 //paytm
 app.post("/paynow", [parseUrl, parseJson], PaymentController.paymentPayNow);

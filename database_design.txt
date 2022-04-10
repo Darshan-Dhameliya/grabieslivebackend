@@ -1,0 +1,60 @@
+const ComplaintSchema = new mongoose.Schema({
+  complaintDesc: String,
+  complaintDate: String,
+  markAsRead:Boolean,
+  empId: String,
+  appoId: String,
+  userId: String,
+});
+
+
+const feedbackSchema = new mongoose.Schema({
+  rating: String,
+  feedbackDesc: String,
+  feedbackDate: String,
+  empId: String,
+  appoId: String,
+  userId: String,
+});
+
+
+let employeSchema = new mongoose.Schema({
+  empName: String,
+  email: String,
+  phone: String,
+  service_Area: String,
+  service_Spec: String,
+  password: String,
+  isVerified: Boolean,
+});
+
+const UserSchema = new mongoose.Schema({
+  email: String,
+  password: String,
+});
+
+const adminSchema = new mongoose.Schema({
+  email: String,
+  password: String,
+  number: String,
+  name: String,
+});
+
+
+let appointmentSchema = new mongoose.Schema({
+  userid: String,
+  username: String,
+  useremail: String,
+  userphone: String,
+  userAddress: String,
+  service: String,
+  charge: String,
+  area: String,
+  sub_spec: String,
+  emp_appoint: String,
+  date: String,
+  time: String,
+  dateAndTime: String,
+  isCompleted: Boolean,
+  otp: String,
+});

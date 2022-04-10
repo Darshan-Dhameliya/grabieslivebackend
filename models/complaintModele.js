@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const ComplaintSchema = new mongoose.Schema({
   complaintDesc: String,
   complaintDate: String,
+  markAsRead: Boolean,
   empId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Employee",

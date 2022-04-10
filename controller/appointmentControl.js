@@ -167,6 +167,22 @@ function appointment() {
 
     res.send({ status: true, data });
   };
+
+  this.DeleteCancelAppo = async (req, res) => {
+    const { id } = req.body;
+
+    try {
+      const data = await Appoint.findByIdAndDelete(id);
+      if (data) {
+        res.send({ status: true, message: "Appoiment cancel successful" });
+      } else {
+        res.send({ status: false, message: "Something went wrong" });
+      }
+    } catch (e) {
+      console.log(e);
+      res.send({ status: false, message: "Something went wrong" });
+    }
+  };
 }
 
 module.exports = new appointment();

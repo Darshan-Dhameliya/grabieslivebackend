@@ -5,6 +5,8 @@ const Admin = require("../models/adminModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../Config");
+const compLaint = require("../models/complaintModele");
+const feedBack = require("../models/feedBackModule");
 
 function adminControl() {
   this.totalCount = async (req, res) => {
@@ -16,6 +18,8 @@ function adminControl() {
     const ToatalUnCompletedAppoiment =
       ToatalAppoiment - ToatalCompletedAppoiment;
     const ToatalUnVerifiedEmp = ToatalEmp - ToatalVerifiedEmp;
+    const TotalComplaint = await compLaint.count({});
+    const TotalfeedBack = await feedBack.count({});
 
     res.send({
       TotalUser,
@@ -25,6 +29,8 @@ function adminControl() {
       ToatalCompletedAppoiment,
       ToatalUnCompletedAppoiment,
       ToatalUnVerifiedEmp,
+      TotalComplaint,
+      TotalfeedBack,
     });
   };
 
@@ -146,6 +152,33 @@ function adminControl() {
         status: false,
         message: "old Password Not match",
       });
+    }
+  };
+
+  this.viewFeedBack = async (req, res) => {
+    try {
+      const data = await feedBack.find({});
+      if (data) {
+        console.log(data);
+        res.send({ status: true, data });
+      } else {
+        res.send({ status: false });
+      }
+    } catch (e) {
+      res.send({ status: false });
+    }
+  };
+
+  this.ViewComplaint = async (req, res) => {
+    try {
+      const data = await compLaint.find({});
+      if (data) {
+        res.send({ status: true, data });
+      } else {
+        res.send({ status: false });
+      }
+    } catch (e) {
+      res.send({ status: false });
     }
   };
 }
