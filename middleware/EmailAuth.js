@@ -78,7 +78,7 @@ function controller() {
             console.log(err);
           }
         }).clone();
-        res.send({ status: false, message: "OTP Expired.." });
+        res.send({ status: false, message: "OTP Expired we send new otp.." });
       }
     } else {
       res.send({ status: false, message: "Invalid Otp.." });

@@ -6,6 +6,10 @@ mongodb+srv://GrabiesLive:GrabiesLive@grabieslive.unhfo.mongodb.net/myFirstDatab
 
 --> for hosting push :
 
+
+for email :
+https://accounts.google.com/DisplayUnlockCaptcha
+
 change url :
 1)http://localhost:8000
 -->https://grabieslive.herokuapp.com

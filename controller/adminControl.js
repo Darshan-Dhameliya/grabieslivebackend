@@ -159,7 +159,6 @@ function adminControl() {
     try {
       const data = await feedBack.find({});
       if (data) {
-        console.log(data);
         res.send({ status: true, data });
       } else {
         res.send({ status: false });

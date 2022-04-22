@@ -70,6 +70,7 @@ function appointment() {
         { service: bdata.service },
         { date: bdata.date },
         { time: bdata.time },
+        { isCompleted: false },
       ],
     }).clone();
     if (appoints.length) {
@@ -105,7 +106,9 @@ function appointment() {
       .clone();
 
     const empNotAvailablearr = [];
-    empNotAvailable.map((item) => empNotAvailablearr.push(item.emp_appoint));
+    empNotAvailable.map((item) =>
+      empNotAvailablearr.push(item.emp_appoint.toString())
+    );
 
     const AvilableEmparr = Empdataarr.filter(function (obj) {
       return empNotAvailablearr.indexOf(obj) === -1;
@@ -114,7 +117,6 @@ function appointment() {
     if (AvilableEmparr.length) {
       req.EmpID =
         AvilableEmparr[Math.floor(Math.random() * AvilableEmparr.length)];
-
       next();
     } else {
       res.send({
