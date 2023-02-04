@@ -30,7 +30,7 @@ function PaymentController() {
       params["ORDER_ID"] = "TEST_" + new Date().getTime();
       params["CUST_ID"] = paymentDetails.customerId;
       params["TXN_AMOUNT"] = paymentDetails.amount;
-      params["CALLBACK_URL"] = "https://grabieslive.herokuapp.com/callback";
+      params["CALLBACK_URL"] = "http://localhost:8000/callback";
       params["EMAIL"] = paymentDetails.customerEmail;
       params["MOBILE_NO"] = paymentDetails.customerPhone;
 
@@ -124,13 +124,9 @@ function PaymentController() {
             post_res.on("end", function () {
               var _result = JSON.parse(response);
               if (_result.STATUS == "TXN_SUCCESS") {
-                res.redirect(
-                  "https://grabieslive.web.app/emp/homepage?status=200"
-                );
+                res.redirect("http://localhost:3000/emp/homepage?status=200");
               } else {
-                res.redirect(
-                  "https://grabieslive.web.app/emp/homepage?status=400"
-                );
+                res.redirect("http://localhost:3000/emp/homepage?status=400");
               }
             });
           });
